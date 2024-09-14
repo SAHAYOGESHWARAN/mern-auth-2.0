@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../api/axiosConfig';  // Import the axios config
+import axiosInstance from '../api/axiosConfig';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +10,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // Use the configured axios instance
+      console.log('Sending registration data:', { email, password });
       await axiosInstance.post('/api/auth/register', { email, password });
       alert('Check your email for OTP');
       setShowOtp(true);
@@ -23,7 +23,7 @@ const Register = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      // Use the configured axios instance for OTP verification
+      console.log('Verifying OTP:', { email, otp });
       await axiosInstance.post('/api/auth/verify-otp', { email, otp });
       alert('Email verified successfully');
       setShowOtp(false);
@@ -52,6 +52,7 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+        />
       )}
       {showOtp && (
         <input
@@ -60,6 +61,7 @@ const Register = () => {
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           required
+        />
       )}
       <button type="submit">{showOtp ? 'Verify OTP' : 'Register'}</button>
     </form>
