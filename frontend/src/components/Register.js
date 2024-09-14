@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../api/axiosConfig';  // Import the axios config
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -7,28 +7,26 @@ const Register = () => {
   const [otp, setOtp] = useState('');
   const [showOtp, setShowOtp] = useState(false);
 
-  // Handle Registration
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // Send email and password to backend
-      await axios.post('http://localhost:5000/api/auth/register', { email, password });
+      // Use the configured axios instance
+      await axiosInstance.post('/api/auth/register', { email, password });
       alert('Check your email for OTP');
-      setShowOtp(true);  // Show OTP input field
+      setShowOtp(true);
     } catch (err) {
       console.error('Error registering:', err.response ? err.response.data.msg : err.message);
       alert('Error registering: ' + (err.response ? err.response.data.msg : err.message));
     }
   };
 
-  // Handle OTP Verification
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      // Send OTP to backend for verification
-      await axios.post('http://localhost:5000/api/auth/verify-otp', { email, otp });
+      // Use the configured axios instance for OTP verification
+      await axiosInstance.post('/api/auth/verify-otp', { email, otp });
       alert('Email verified successfully');
-      setShowOtp(false); // Reset the form
+      setShowOtp(false);
       setEmail('');
       setPassword('');
       setOtp('');
@@ -54,7 +52,6 @@ const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-        />
       )}
       {showOtp && (
         <input
@@ -63,7 +60,6 @@ const Register = () => {
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
           required
-        />
       )}
       <button type="submit">{showOtp ? 'Verify OTP' : 'Register'}</button>
     </form>
