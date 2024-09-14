@@ -10,8 +10,9 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      console.log('Sending registration data:', { email, password });
-      await axiosInstance.post('/api/auth/register', { email, password });
+      console.log('Registering with:', { email, password });
+      const response = await axiosInstance.post('/api/auth/register', { email, password });
+      console.log('Registration response:', response);
       alert('Check your email for OTP');
       setShowOtp(true);
     } catch (err) {
@@ -23,8 +24,9 @@ const Register = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      console.log('Verifying OTP:', { email, otp });
-      await axiosInstance.post('/api/auth/verify-otp', { email, otp });
+      console.log('Verifying OTP with:', { email, otp });
+      const response = await axiosInstance.post('/api/auth/verify-otp', { email, otp });
+      console.log('OTP verification response:', response);
       alert('Email verified successfully');
       setShowOtp(false);
       setEmail('');
