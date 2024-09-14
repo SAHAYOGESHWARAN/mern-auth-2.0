@@ -38,3 +38,21 @@ router.post('/forgot-password', async (req, res) => {
     res.status(500).send('Server error.');
   }
 });
+
+// Example route for login
+router.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  // Add authentication logic here
+  res.send('Login endpoint');
+});
+
+// Example route for register
+router.post('/register', (req, res) => {
+  const { email, password } = req.body;
+  // Add registration logic here
+  res.send('Register endpoint');
+});
+
+
+module.exports = router;
+
