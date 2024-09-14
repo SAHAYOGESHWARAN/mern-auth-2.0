@@ -1,18 +1,32 @@
-const express = require('express');
+const express = require('express'); 
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const dotenv = require('dotenv');
+
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+// MongoDB URI from environment variables with a fallback
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/defaultdb';
+
+if (!uri) {
+  console.error('MongoDB connection URI is undefined. Please check the .env file.');
+  process.exit(1); // Exit if no URI is found
+}
+
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected successfully'))
+.catch((err) => console.error('MongoDB connection error:', err.message));
 
 app.use('/api/auth', authRoutes);
 
-app.listen(5000, () => {
-  console.log('Server running on port 5000');
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
