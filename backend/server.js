@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 // Load .env file before accessing environment variables
-dotenv.config({ path: '/.env' });
+dotenv.config({ path: '../.env' });  
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -11,14 +11,13 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 app.use(express.json());
 
-// Debugging: Log the MONGO_URI to verify if it's loaded correctly
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
 const uri = process.env.MONGO_URI;
 
 if (!uri) {
   console.error('MongoDB URI is not defined in the .env file');
-  process.exit(1); // Exit if the URI is missing
+  process.exit(1);
 }
 
 // MongoDB connection
