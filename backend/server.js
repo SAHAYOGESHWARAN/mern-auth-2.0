@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
+
 
 // Load .env file before accessing environment variables
 dotenv.config({ path: '../.env' });  
@@ -31,6 +33,10 @@ mongoose.connect(uri, {
 // Mount routes
 app.use('/api/auth', authRoutes);
 app.use('/users', userRoutes);
+
+
+// Allow requests from the frontend
+app.use(cors({ origin: 'http://localhost:3000' })); 
 
 // Start the server
 app.listen(5000, () => {
