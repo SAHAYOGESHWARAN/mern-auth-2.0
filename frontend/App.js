@@ -13,6 +13,9 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/reset-password/:token" component={ResetPassword} />
+        <Route path="/" exact>
+          <h1>Welcome to MERN Auth App</h1>
+        </Route>
       </Switch>
     </Router>
   );
