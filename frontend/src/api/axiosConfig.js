@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// Set the base URL for all requests
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000',  // Backend URL
+  baseURL: 'http://localhost:5000',  // Ensure this URL is correct
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export default axiosInstance;
